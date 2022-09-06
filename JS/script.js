@@ -31,7 +31,7 @@ for (let i = 0; i < 2; i++) {
     b = prompt("На сколько оцените его?", "");
   if (
     a != null &&
-    b != 0 &&
+    b != null &&
     a != "" &&
     b != "" &&
     a.length < 50 &&
@@ -41,6 +41,16 @@ for (let i = 0; i < 2; i++) {
   } else {
     i--;
   }
+}
+
+if (personalMovieDB.count < 10) {
+  console.log("Просмотрено довольно мало фильмов");
+} else if (personalMovieDB.count >= 10 && 30 > personalMovieDB.count) {
+  console.log("Вы классический зритель");
+} else if (personalMovieDB.count >= 30) {
+  console.log("Вы киноман");
+} else {
+  console.log("Произошла ошибка");
 }
 
 console.log(personalMovieDB);
