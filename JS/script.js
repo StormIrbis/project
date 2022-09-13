@@ -1,80 +1,70 @@
-// 1) Первую часть задания повторить по уроку
+// Создайте функцию, которая будет вычислять объем и площадь полной поверхности куба (тоже базовая математика, иногда используется в создании
+// анимаций). Эта функция принимает в себя целое число со значением длины ребра куба. Ответ выведите в формате строки, который изображен в примерах.
 
-// 2) Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции
-// false - выводит в консоль главный объект программы
+// Если в функцию попал неправильный аргумент или вычислить значения невозможно - вернуть строку "При вычислении произошла ошибка"
 
-// 3) Создать функцию writeYourGenres в которой пользователь будет 3 раза отвечать на вопрос
-// "Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных
-// genres
+// НЕ ИСПОЛЬЗУЙТЕ ОПЕРАТОР СТЕПЕНИ ** - в онлайн среде браузера он не работает и тесты будут ломаться. Это из-за того, что этот оператор
+// из более нового стандарта, чем тут доступен.
 
-// P.S. Функции вызывать не обязательно*/
+// Примеры:
+
+// calculateVolumeAndArea(5)  => 'Объем куба: 125, площадь всей поверхности: 150'
+
+// calculateVolumeAndArea(15)  => 'Объем куба: 3375, площадь всей поверхности: 1350'
+
+// calculateVolumeAndArea(15.5)  => 'При вычислении произошла ошибка'
+
+// calculateVolumeAndArea('15')  => 'При вычислении произошла ошибка'
+
+// calculateVolumeAndArea(-15)  => 'При вычислении произошла ошибка'
 
 "use strict";
 
-let numberOfFilms;
+function calculateVolumeAndArea(edge) {
+  if (!Number.isInteger(edge) || edge < 0 || typeof (edge) !== 'number') {
+    return 'При вычислении произошла ошибка';
+  } 
+    let v = edge * edge * edge;
+    let s = edge * edge * 6;
+    return `Объем куба: ${v}, площадь всей поверхности: ${s}`;
+}
 
-function start() {
-  numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", "");
+// Напишите функцию, которая будет определять номер купе по переданному ей номеру места. Наглядно:
 
-  while (numberOfFilms == "" || numberOfFilms == null || isNaN(numberOfFilms)) {
-    numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", "");
+// Функция принимает только целое число от 1 до 36.
+
+// Если переданный аргумент не число, отрицательное или дробное - возвращается сообщение:
+
+// "Ошибка. Проверьте правильность введенного номера места"
+
+// Если число 0 или больше 36, то сообщение: "Таких мест в вагоне не существует"
+
+// Пример:
+
+// getCoupeNumber(33)  => 9
+
+// getCoupeNumber(7)  => 2
+
+// getCoupeNumber(300)  => "Таких мест в вагоне не существует"
+
+// getCoupeNumber(0)  => "Таких мест в вагоне не существует"
+
+// getCoupeNumber(7.7)  => "Ошибка. Проверьте правильность введенного номера места"
+
+// getCoupeNumber(-10)  => "Ошибка. Проверьте правильность введенного номера места"
+
+// getCoupeNumber('Hello')  => "Ошибка. Проверьте правильность введенного номера места"
+
+// Такая функция вполне реальна и может использоваться для формирования билетов, в том числе и визуально на сайтах. Конечно, там будет куда больше условий, но смысл остается таким же.
+
+function getCoupeNumber(num) {
+  if (Number.isInteger(num) && num >= 1 && num <= 36) {
+    return Math.ceil(num/4);
+  } else if (!Number.isInteger(num) || num < 0){
+    return "Ошибка. Проверьте правильность введенного номера места";
+  } else if( num === 0 || num > 36){
+    return "Таких мест в вагоне не существует";
   }
 }
 
-start();
-
-const personalMovieDB = {
-  count: numberOfFilms,
-  movies: {},
-  actors: {},
-  genres: [],
-  privat: false,
-};
-
-function rememberMyFilms() {
-  for (let i = 0; i < 2; i++) {
-    const a = prompt("Один из последних просмотренных фильмов?", ""),
-      b = prompt("На сколько оцените его?", "");
-
-    if (a != null && b != null && a != "" && b != "" && a.length < 50) {
-      personalMovieDB.movies[a] = b;
-      console.log("done");
-    } else {
-      console.log("error");
-      i--;
-    }
-  }
-}
-
-rememberMyFilms();
-
-function detectPersonalLevel() {
-  if (personalMovieDB.count < 10) {
-    console.log("Просмотрено довольно мало фильмов");
-  } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
-    console.log("Вы классический зритель");
-  } else if (personalMovieDB.count >= 30) {
-    console.log("Вы киноман");
-  } else {
-    console.log("Произошла ошибка");
-  }
-}
-
-detectPersonalLevel();
-
-function showMyDB (hidden) {
-  if (!hidden) {
-      console.log(personalMovieDB);
-  }
-}
-
-showMyDB(personalMovieDB.privat);
-
-function writeYourGenres() {
-  for (let i = 1; i < 4; i++) {
-    personalMovieDB.genres[i - 1] = prompt(`Ваш любимый жанр под номером ${i}?`, "");
-  }
-}
-
-writeYourGenres();
 
